@@ -15,6 +15,14 @@ services:
                     arguments:
                         - '@App\Manager\User\UserManager'
 
+    Doctrine\DBAL\Connection:
+        factory:      Doctrine\DBAL\DriverManager::getConnection
+        arguments:
+            $params:
+                driver:   pdo_pgsql
+                url:      '%env(DATABASE_URL)%'
+                charset:  UTF8
+
 
     App\:
         resource: '../src/*'

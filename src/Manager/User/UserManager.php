@@ -1,7 +1,7 @@
 <?php
 namespace App\Manager\User;
 
-use App\Entity\User;
+use App\Gateway\User\UserGatewayInterface;
 
 /**
  * Class UserManager
@@ -10,23 +10,22 @@ use App\Entity\User;
  */
 class UserManager
 {
+    /** @var UserGatewayInterface */
+    protected $userGateway;
+
+    public function __construct(UserGatewayInterface $userGateway)
+    {
+        $this->userGateway = $userGateway;
+    }
+
     /**
      * Find all users
      *
+     * @param array $filters
      * @return array
      */
-    public function findAll(): array
+    public function findAll(array $filters = []): array
     {
-        return [
-            (new User())
-                ->setId(1)
-                ->setFirstName('Boris')
-                ->setLastName('Cerati'),
-
-            (new User())
-                ->setId(2)
-                ->setFirstName('Corentin')
-                ->setLastName('Miclo')
-        ];
+        return $this->userGateway->findAll($filters);
     }
 }
